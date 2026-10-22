@@ -1,7 +1,7 @@
 {
   "name": "@sunshaobei/dsh-workflow",
   "description": "MCode workflow UI and runtime integration for DSH",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "type": "module",
   "main": "./lib/index.js",
   "exports": {
