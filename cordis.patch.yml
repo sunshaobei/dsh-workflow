@@ -11,7 +11,7 @@
 
 - insert:
     - id: dsh-workflow
-      name: '@sunshaobei/dsh-workflow'
+      name: 'dsh-workflow'
       config:
         enabled: true
         workflowsDir: ''
