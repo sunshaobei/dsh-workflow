@@ -1,0 +1,17 @@
+# dsh-workflow bundle patch: mounts the workflow host service so the package
+# becomes a host Loader entry. That is what registers the workflow_* tools and
+# makes the roster generator pick up the `dsh.client` declaration and serve
+# lib/client.js to the browser (the「工作流」panel).
+#
+# config:
+#   enabled:      set false to skip mounting the service entirely.
+#   workflowsDir: root directory for saved workflows (<dir>/saved/<name>.dwf.ts)
+#                 and runs (<dir>/runs/<runId>/). Leave '' to use the plugin
+#                 default (<dsh-home>/dsh-workflow).
+
+- insert:
+    - id: dsh-workflow
+      name: 'dsh-workflow'
+      config:
+        enabled: true
+        workflowsDir: ''
