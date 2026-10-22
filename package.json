@@ -1,7 +1,7 @@
 {
   "name": "@sunshaobei/dsh-workflow",
   "description": "MCode workflow UI and runtime integration for DSH",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "type": "module",
   "main": "./lib/index.js",
   "exports": {
@@ -65,5 +65,13 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sunshaobei/dsh-workflow.git"
+  },
+  "homepage": "https://github.com/sunshaobei/dsh-workflow#readme",
+  "bugs": {
+    "url": "https://github.com/sunshaobei/dsh-workflow/issues"
   }
 }
