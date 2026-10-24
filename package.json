@@ -1,7 +1,7 @@
 {
   "name": "@sunshaobei/dsh-workflow",
   "description": "MCode workflow UI and runtime integration for DSH",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "type": "module",
   "main": "./lib/index.js",
   "exports": {
@@ -46,8 +46,8 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/dsh-llm": "0.2.1-rc.2",
-    "@deepseek-ai/dsh-tools": "0.2.1-rc.2",
+    "@deepseek-ai/dsh-llm": "^0.2.1-rc.2",
+    "@deepseek-ai/dsh-tools": "^0.2.1-rc.2",
     "@deepseek-ai/schemastery": "~3.18.5"
   },
   "scripts": {
