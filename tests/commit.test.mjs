@@ -70,9 +70,15 @@ test("native child success is not cancelled on workflow completion; stopped runs
     { sessionId: child, instance: "ask#1@1", instructions: "开发" },
     assert.fail,
   );
+  // DSH >= 0.2.2 reads these fields from the activation spec directly; the
+  // nested `request` copy keeps <= 0.2.1 hosts working from the same build.
+  assert.equal(starts[0].parent.id, "parent");
+  assert.equal(starts[0].prompt[0].type, "text");
+  assert.match(starts[0].prompt[0].text, /workflow_submit_ask/);
+  assert.equal(starts[0].agentOptions.provider, "provider");
+  assert.equal(starts[0].agentOptions.model, "model");
   assert.equal(starts[0].request.agentOptions.provider, "provider");
   assert.equal(starts[0].request.prompt[0].type, "text");
-  assert.match(starts[0].request.prompt[0].text, /workflow_submit_ask/);
   assert.equal(starts[0].request.agentOptions.model, "model");
   driver.accepted("ask#1@1");
   driver.dispose(true);
