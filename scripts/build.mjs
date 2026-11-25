@@ -1,5 +1,10 @@
 import { build } from "esbuild";
+import { readFileSync } from "node:fs";
 import { writeFile } from "node:fs/promises";
+
+const { name: packageName } = JSON.parse(
+  readFileSync(new URL("../package.json", import.meta.url), "utf8"),
+);
 const result = await build({
   entryPoints: ["src/client.jsx"],
   bundle: true,
@@ -12,6 +17,6 @@ const result = await build({
 });
 await writeFile(
   "lib/client.js",
-  `// Generated from src/client.jsx and src/workflow.css.\nwindow.__ModuleLoader__.load({ id: "dsh-workflow", factory: (require) => {\nvar module = { exports: {} }; var exports = module.exports;\n${result.outputFiles[0].text}\nreturn module.exports;\n} });\n`,
+  `// Generated from src/client.jsx and src/workflow.css.\nwindow.__ModuleLoader__.load({ id: ${JSON.stringify(packageName)}, factory: (require) => {\nvar module = { exports: {} }; var exports = module.exports;\n${result.outputFiles[0].text}\nreturn module.exports;\n} });\n`,
 );
 console.log("Built lib/client.js");
