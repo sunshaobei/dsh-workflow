@@ -2184,6 +2184,13 @@ export function apply(ctx) {
       <Component {...props} />
     </Root>
   );
+  // 右侧栏的 tab 必须撑满并自己滚动：宿主给的是一个定高容器，Root 不 fill 时
+  // .wf-pane 的 height:100% 落空，长列表会被外层裁掉且没有滚动条。
+  const wrapFill = (Component) => (props) => (
+    <Root context={context} fill>
+      <Component {...props} />
+    </Root>
+  );
   const register = (name, options, Component) =>
     ctx.slots.inject(name, () =>
       ctx.slots.register({ name, ...options }, Component),
@@ -2271,7 +2278,7 @@ export function apply(ctx) {
   register(
     "sidebar.right.pane.tab",
     { key: "dsh-workflow.workflow" },
-    wrap(function RunTab({ useTabInfo }) {
+    wrapFill(function RunTab({ useTabInfo }) {
       const tab = useTabInfo();
       const id = decodeURIComponent(
         new URL(tab.tab.navigation.address).pathname.slice(1),
@@ -2282,7 +2289,7 @@ export function apply(ctx) {
   register(
     "sidebar.right.pane.tab",
     { key: "dsh-workflow.workflow-artifact" },
-    wrap(function ArtifactTab({ useTabInfo }) {
+    wrapFill(function ArtifactTab({ useTabInfo }) {
       const tab = useTabInfo();
       const [runId, id] = new URL(tab.tab.navigation.address).pathname
         .slice(1)

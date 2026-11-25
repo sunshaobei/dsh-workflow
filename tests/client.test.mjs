@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { build } from "esbuild";
 import { createRequire } from "node:module";
+import { readFileSync } from "node:fs";
 import { JSDOM } from "jsdom";
 import React, { act } from "react";
 import { createRoot } from "react-dom/client";
@@ -266,4 +267,16 @@ test("preset artifacts use nested fields, replace keyed rows, and render negativ
   assert.equal(bars.length, 2);
   assert.equal(bars[0].getAttribute("height"), bars[1].getAttribute("height"));
   assert.notEqual(bars[0].getAttribute("y"), bars[1].getAttribute("y"));
+});
+
+test("长运行列表各自拥有滚动容器：侧栏 tab 撑满 + 卡片时间线限高", () => {
+  const css = readFileSync(new URL("../src/workflow.css", import.meta.url), "utf8");
+  // 侧栏：.wf-pane 必须能在 flex 父级里收缩（min-height:0），否则长列表被裁掉。
+  assert.match(css, /\.wf-pane\s*\{[^}]*min-height:\s*0/s);
+  // 卡片：阶段列可能很高，时间线自己纵向滚动，而不是把整张卡撑出视口。
+  assert.match(css, /\.wf-timeline\s*\{[^}]*max-height:\s*min\(60vh,\s*520px\)/s);
+  assert.match(css, /\.wf-timeline\s*\{[^}]*overflow:\s*auto/s);
+  const built = readFileSync(new URL("../lib/client.js", import.meta.url), "utf8");
+  assert.match(built, /wrapFill\(function RunTab/);
+  assert.match(built, /wrapFill\(function ArtifactTab/);
 });
